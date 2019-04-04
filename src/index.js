@@ -9,31 +9,34 @@ the task string that the user provided should appear on the DOM after the submit
   toDoForm.addEventListener('submit', function(event) {
     event.preventDefault();
     let style = "";
+    let task = event.target.querySelector('input').value;
+    let date = event.target[1].value;
+    let priority = event.target[2].value;
+    let newTag = document.createElement('li')
 
     function makeTag() {
-      return `<li ${style}>
-        ${event.target.querySelector('input').value}
+      return `${task}<div class="trash">🗑 </div>
+        <div class="due-date"> ${date}</div>
+        <div class="priority" id="${priority}">${priority}</div>`
+    };
+
+    function makeTagText(color) {
+      return `<li style="color: ${color};"> ${task}
         <div class="trash">🗑 </div>
-        <div class="due-date"> ${event.target[1].value}</div>
-        <div class="priority">${event.target[2].value}</div>
-        </select>
+        <div class="due-date"> ${date}</div>
+        <div class="priority" id="${priority}">${priority}</div>
         </li>`
     };
 
-    if (event.target[2].value == 'high') {
-      style = `style="color: red;"`
-    } else if (event.target[2].value == 'medium') {
-      style = `style="color: yellow;"`
-    } else if (event.target[2].value == 'low') {
-      style = `style="color: green;"`
+    if (priority == 'high') {
+      toDoUl.innerHTML = makeTagText("red") + toDoUl.innerHTML;
+    } else if (priority == 'medium') {
+      newTag.style = "color: orange;"
+      newTag.innerHTML = makeTag()
+      toDoUl.insertBefore(newTag, document.querySelector("#low").parentElement);
+    } else if (priority == 'low') {
+      toDoUl.innerHTML += makeTagText("green");
     };
-
-    if (style.includes('red') == true) {
-      toDoUl.innerHTML = makeTag() + toDoUl.innerHTML
-    } else {
-      toDoUl.innerHTML += makeTag();
-    };
-
 
   });
 
