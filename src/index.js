@@ -10,6 +10,16 @@ the task string that the user provided should appear on the DOM after the submit
     event.preventDefault();
     let style = "";
 
+    function makeTag() {
+      return `<li ${style}>
+        ${event.target.querySelector('input').value}
+        <div class="trash">🗑 </div>
+        <div class="due-date"> ${event.target[1].value}</div>
+        <div class="priority">${event.target[2].value}</div>
+        </select>
+        </li>`
+    };
+
     if (event.target[2].value == 'high') {
       style = `style="color: red;"`
     } else if (event.target[2].value == 'medium') {
@@ -18,13 +28,13 @@ the task string that the user provided should appear on the DOM after the submit
       style = `style="color: green;"`
     };
 
-    toDoUl.innerHTML = toDoUl.innerHTML + `<li ${style}>
-      ${event.target.querySelector('input').value}
-      <div class="trash">🗑 </div>
-      <div class="due-date"> ${event.target[1].value}</div>
-      <div class="priority">${event.target[2].value}</div>
-      </select>
-      </li>`;
+    if (style.includes('red') == true) {
+      toDoUl.innerHTML = makeTag() + toDoUl.innerHTML
+    } else {
+      toDoUl.innerHTML += makeTag();
+    };
+
+
   });
 
   /* A priority value selected from a dropdown that is used to determine the color of the text in the list (e.g. red for high priority, yellow for medium, green for low)
