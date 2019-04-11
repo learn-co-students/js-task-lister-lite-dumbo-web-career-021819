@@ -14,9 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
     if ( event.target.lastElementChild === submitButton) {
       let newTask = document.querySelector('#new-task-description').value
       tasksUlTag.innerHTML += taskLiTag(newTask)
-      taskLiTag.addEventListener('click', (event) => {
-        debugger
-      })
     }
   })
 });
